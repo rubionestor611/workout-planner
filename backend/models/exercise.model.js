@@ -50,7 +50,7 @@ var exerciseSchema = new Schema({
   },
   restTime:{
     type: Number,
-    required: true,
+    required: false,
     unique: false
   } 
 });

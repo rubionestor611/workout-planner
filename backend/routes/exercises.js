@@ -10,11 +10,11 @@ router.route('/').get((req,res) => {
 router.route('/add').post((req,res) => {
   // gather information to add exercise into database
   const title = req.body.title;
-  const description = req.body.description ? req.body.description : null;
-  const img = req.body.img ? req.body.img : null;
-  const exerciseType = req.body.exerciseType ? req.body.exerciseType : null;
-  const exerciseInfo = req.body.exerciseInfo ? req.body.exerciseInfo : null;
-  const restTime = req.body.restTime ? req.body.restTime : null;
+  const description = req.body.description;
+  const img = req.body.img;
+  const exerciseType = req.body.exerciseType;
+  const exerciseInfo = req.body.exerciseInfo;
+  const restTime = req.body.restTime;
   
   const newExercise = new Exercise({
     title,

@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-require('dotenv').config();
+require('dotenv').config({path: '../.env'});
 
 const app = express();
 const port = process.env.PORT || 5555;
@@ -12,8 +12,16 @@ const uri = process.env.ATLAS_URI;
 mongoose.connect(uri);
 const connection = mongoose.connection;
 connection.once('open', () => {
-console.log("MongoDB database connection established successfully");
+console.log("MongoDB database connection established successfully w/ ", uri);
 });
+
+const exerciseRouter = require('./routes/exercises');
+// const workoutRouter = require('./routes/workouts');
+// const userRouter = require('./routes/users');
+
+app.use('/exercises', exerciseRouter);
+// app.use('/workouts', workoutRouter);
+// app.use('/users', userRouter);
 
 app.listen(port, () => {
 console.log(`Server is running on port: ${port}`);

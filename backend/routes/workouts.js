@@ -21,13 +21,13 @@ router.route('/add').post((req,res) => {
   const title = req.body.title;
   const description = req.body.description;
   const img = req.body.img;
+  const recurrence = req.body.recurrence;
+  const scheduledDate = req.body.scheduledDate;
+  const dateOfCompletion = req.body.dateOfCompletion;
   const exercises = req.body.exercises;
   const duration = req.body.duration;
   const location = req.body.location;
-  const recurrence = req.body.recurrence;
-  const scheduledDate = req.body.recurrence;
-  const dateOfCompletion = req.body.dateOfCompletion;
-  
+
   const newWorkout = new Workout({
     title,
     description,
@@ -48,14 +48,14 @@ router.route('/add').post((req,res) => {
 
 //------UPDATE-----//
 router.route('/:id').patch((req,res) => {
-  Wokrout.findById(req.params.id)
+  Workout.findById(req.params.id)
     .then(workout => {
       workout.title = req.body.title;
       workout.description = req.body.description;
       workout.img = req.body.img;
-      workout.exerciss = req.body.exercises;
+      workout.exercises = req.body.exercises;
       workout.location = req.body.location;
-      workout.recurrence = req.body.reccurence;
+      workout.recurrence = req.body.recurrence;
       workout.scheduledDate = req.body.scheduledDate;
       workout.dateOfCompletion = req.body.dateOfCompletion;
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let Exercise = require('./exercise.model')
+let Exercise = require('./exercise.model').schema;
 
 var workoutSchema = new Schema({
   title: {
@@ -35,7 +35,7 @@ var workoutSchema = new Schema({
     type: String,
     required: false,
   },
-  reccurrence: {
+  recurrence: {
     type: Boolean,
     required: true,
   },
@@ -51,4 +51,4 @@ var workoutSchema = new Schema({
 
 const Workout = mongoose.model('Workout', workoutSchema);
 
-module.exports = Exercise;
+module.exports = Workout;

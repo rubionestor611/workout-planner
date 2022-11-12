@@ -52,7 +52,15 @@ var exerciseSchema = new Schema({
     type: Number,
     required: false,
     unique: false
-  } 
+  },
+  tags: {
+    type: [{type: String}],
+    required: false
+  },
+  muscleGroups: {
+    type: [String],
+    required: false
+  }
 });
 
 const Exercise = mongoose.model('Exercise', exerciseSchema);

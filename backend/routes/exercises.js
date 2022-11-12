@@ -23,14 +23,18 @@ router.route('/add').post((req,res) => {
   const exerciseType = req.body.exerciseType;
   const exerciseInfo = req.body.exerciseInfo;
   const restTime = req.body.restTime;
-  
+  const tags = req.body.tags;
+  const muscleGroups = req.body.muscleGroups;
+
   const newExercise = new Exercise({
     title,
     description,
     img,
     exerciseType,
     exerciseInfo,
-    restTime
+    restTime,
+    tags,
+    muscleGroups
   })
 
   newExercise.save()

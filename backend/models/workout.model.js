@@ -47,6 +47,14 @@ var workoutSchema = new Schema({
     type: Date,
     required: false,
   },
+  tags: {
+    type: [String],
+    required: false
+  },
+  muscleGroups: {
+    type: [String],
+    required: false
+  }
 });
 
 const Workout = mongoose.model('Workout', workoutSchema);

@@ -26,6 +26,8 @@ router.route('/add').post((req,res) => {
   const exercises = req.body.exercises;
   const duration = req.body.duration;
   const location = req.body.location;
+  const tags = req.body.tags;
+  const muscleGroups = req.body.muscleGroups;
 
   const newWorkout = new Workout({
     title,
@@ -36,7 +38,9 @@ router.route('/add').post((req,res) => {
     location,
     recurrence,
     scheduledDate,
-    dateOfCompletion
+    dateOfCompletion,
+    tags,
+    muscleGroups
   })
 
   newWorkout.save()

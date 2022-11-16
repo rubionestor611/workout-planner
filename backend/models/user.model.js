@@ -24,24 +24,25 @@ var userSchema = new Schema({
         required: [true, "Please enter a password"],
         minlength: [8, "Password must be atlease 8 characters long"]
     },
-    friends: {
-        type: [userSchema],
-        required: false,
-    },
-    scheduledWorkouts: {
-        type: [Workout],
-        required: true
-    },
-    completedWorkouts: {
-        type: [Workout],
-        required: true
-    },
-    customWorkouts: {
-        type: [Workout],
-        required: false
-    }
+    friends: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Workout'
+    }],
+    scheduledWorkouts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Workout'
+    }],
+    completedWorkouts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Workout'
+    }],
+    customWorkouts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Workout'
+    }]
 })
 
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
+

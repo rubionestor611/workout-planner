@@ -30,10 +30,6 @@ router.route('/register').post(async (req,res) =>
         name,
         email,
         password: hashedPassword,
-        friends: [],
-        scheduledWorkouts: [],
-        completedWorkouts: [],
-        customWorkouts: []
     });
 
     await user.save((err, newUser) => {
@@ -70,6 +66,51 @@ router.route('/login').get(async (req, res) => {
     }
 });
 
-// TO-DO Delete and update
+//-----DELETE-----//
+router.route('/:id').delete((req, res) => {
+    const id = req.params.id;
+    User.findByIdAndDelete(id, function (error, body) {
+        if (error)
+        {
+            return res.status(400).send(error);
+        }
+        else if (body)
+        {
+            return res.status(200).send({Deleted: body.email})
+        }
+        else
+        {
+            return res.status(400).send({Error: "Cannot be deleted because ID does not exist"})
+        }
+    })
+});
 
+//------UPDATE-----//
+router.route('/:id').patch(async (req, res) => {
+    const id = req.params.id;
+    
+    const {name, friends, scheduledWorkouts, completedWorkouts, customWorkouts, } = req.body
+
+    // Check if user exists
+    const user = await User.findById(id);
+    if (!user)
+    {
+        return res.status(400).send({Error: "User does not exist!"});
+    }
+    
+    console.log(user.friends);
+
+    if (name) {user.name = name;}
+    if (friends) {user.friends = friends;}
+    if (scheduledWorkouts) {user.scheduledWorkouts = scheduledWorkouts;}
+    if (completedWorkouts) {user.completedWorkouts = completedWorkouts;}
+    if (customWorkouts) {user.customWorkouts = customWorkouts;}
+
+    await user.save((err, newUser) => {
+        if (err) return res.status(400).send(err);
+        res.status(200).json(newUser);
+    });
+});
+
+// TO-DO Password reset
 module.exports = router;

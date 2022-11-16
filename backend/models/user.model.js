@@ -26,7 +26,7 @@ var userSchema = new Schema({
     },
     friends: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Workout'
+        ref: 'User'
     }],
     scheduledWorkouts: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -40,7 +40,10 @@ var userSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Workout'
     }]
-})
+},
+{
+    timestamps: true,
+});
 
 const User = mongoose.model('User', userSchema);
 

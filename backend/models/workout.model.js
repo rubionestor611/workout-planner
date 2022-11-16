@@ -25,7 +25,7 @@ var workoutSchema = new Schema({
   },
   exercises: {
     type: [Exercise],
-    required: true,
+    required: false,
   },
   duration: {
     type: Number,

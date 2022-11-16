@@ -1,5 +1,10 @@
 const router = require('express').Router();
+const fs = require('fs');
 let Workout = require('../models/workout.model');
+var multer = require('multer');
+const upload = require('../middleware/uploadMiddleware');
+const {promisify} = require('util');
+const unlinkAsync = promisify(fs.unlink);
 
 //------GET-----//
 router.route('/').get((req,res) => {
@@ -15,11 +20,25 @@ router.route('/:id').get((req, res) => {
 });
 
 //-----POST-----//
-router.route('/add').post((req,res) => {
+router.route('/add').post(upload.single('image'),async (req,res) => {
   // gather information to add workout into database
   const title = req.body.title;
   const description = req.body.description;
-  const img = req.body.img;
+
+  var final_img = null;
+
+  if(req.file){
+    console.log('req.file exists')
+    var img = fs.readFileSync(req.file.path);
+
+    var encode_img = img.toString('base64');
+
+    final_img = {
+      contentType: req.file.mimetype,
+      image: req.file.buffer
+    }
+  }
+
   const recurrence = req.body.recurrence;
   const scheduledDate = req.body.scheduledDate;
   const dateOfCompletion = req.body.dateOfCompletion;
@@ -32,7 +51,7 @@ router.route('/add').post((req,res) => {
   const newWorkout = new Workout({
     title,
     description,
-    img,
+    img: final_img,
     exercises,
     duration,
     location,
@@ -47,6 +66,9 @@ router.route('/add').post((req,res) => {
     .then(() => res.json(`Workout ${newWorkout.title} saved!`))
     .catch(err => res.status(400).json('Error: ' + err));
 
+  // if(req.file){
+  //   await unlinkAsync(req.file.path);
+  // }
 });
 
 //------UPDATE-----//

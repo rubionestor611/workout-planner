@@ -15,7 +15,7 @@ router.route('/register').post(async (req,res) =>
     }
 
     // Check if user exists
-    const emailExists = await User.findOne({email: {$regex: new RegExp("^" + email + "$", "i")}})
+    const emailExists = await User.findOne({email: {$regex: new RegExp("^" + email + "$", "i")}});
 
     if (emailExists)
     {
@@ -53,7 +53,7 @@ router.route('/login').get(async (req, res) => {
     }
 
     // Check if user exists
-    const user = await User.findOne({email: {$regex: new RegExp("^" + email + "$", "i")}})
+    const user = await User.findOne({email: {$regex: new RegExp("^" + email + "$", "i")}});
 
     if (!user)
     {
@@ -69,5 +69,7 @@ router.route('/login').get(async (req, res) => {
         return res.status(400).send({Error: "Invalid Credentials!"})
     }
 });
+
+// TO-DO Delete and update
 
 module.exports = router;

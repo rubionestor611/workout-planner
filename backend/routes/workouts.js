@@ -5,6 +5,7 @@ var multer = require('multer');
 const upload = require('../middleware/uploadMiddleware');
 const {promisify} = require('util');
 const unlinkAsync = promisify(fs.unlink);
+var path = require('path');
 
 //------GET-----//
 router.route('/').get((req,res) => {
@@ -28,15 +29,17 @@ router.route('/add').post(upload.single('image'),async (req,res) => {
   var final_img = null;
 
   if(req.file){
-    console.log('req.file exists')
-    var img = fs.readFileSync(req.file.path);
+    var imgPath = __dirname + '/../middleware/temp/';
+    var img = fs.readFileSync(path.join(imgPath + req.file.filename));
 
-    var encode_img = img.toString('base64');
+    //var encode_img = img.toString('base64');
 
     final_img = {
       contentType: req.file.mimetype,
-      image: req.file.buffer
+      data: img
     }
+  }else{
+    console.log('no image exists in this upload. Maybe the team wants to have a default picture?');
   }
 
   const recurrence = req.body.recurrence;
@@ -66,9 +69,9 @@ router.route('/add').post(upload.single('image'),async (req,res) => {
     .then(() => res.json(`Workout ${newWorkout.title} saved!`))
     .catch(err => res.status(400).json('Error: ' + err));
 
-  // if(req.file){
-  //   await unlinkAsync(req.file.path);
-  // }
+  if(req.file){
+     await unlinkAsync(req.file.path);
+  }
 });
 
 //------UPDATE-----//

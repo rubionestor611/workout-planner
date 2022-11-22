@@ -18,8 +18,6 @@ var workoutSchema = new Schema({
     trim: true
   },
   img: {
-    required: false,
-    unique: false,
     data: Buffer,
     contentType: String
   },

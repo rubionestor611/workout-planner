@@ -18,14 +18,12 @@ var workoutSchema = new Schema({
     trim: true
   },
   img: {
-    required: false,
-    unique: false,
     data: Buffer,
     contentType: String
   },
   exercises: {
     type: [Exercise],
-    required: true,
+    required: false,
   },
   duration: {
     type: Number,

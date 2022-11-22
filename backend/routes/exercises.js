@@ -2,6 +2,8 @@ const router = require('express').Router();
 let Exercise = require('../models/exercise.model');
 const upload = require('../middleware/uploadMiddleware');
 const fs = require('fs');
+var path = require('path');
+
 //------GET-----//
 router.route('/').get((req,res) => {
   Exercise.find()

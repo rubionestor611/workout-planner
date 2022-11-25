@@ -1,5 +1,5 @@
 const router = require('express').Router();
-let Workout = require('../models/workout.model');
+let {Workout, workoutSchema} = require('../models/workout.model');
 
 //------GET-----//
 router.route('/').get((req,res) => {

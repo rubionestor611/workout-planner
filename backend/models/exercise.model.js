@@ -26,27 +26,25 @@ var exerciseSchema = new Schema({
     type: String,
     enum: ['AMRAP', 'CARDIO', 'SETSXREPS'],
   },
-  exerciseInfo:{
-    sets:{
-      type: Number,
-      required: false,
-      unique: false
-    },
-    reps: {
-      type: Number,
-      required: false,
-      unique: false
-    },
-    time: {
-      type: Number,
-      required: false,
-      unique: false
-    },
-    weight: {
-      type: Number,
-      required: false,
-      unique: false
-    }
+  sets:{
+    type: Number,
+    required: false,
+    unique: false
+  },
+  reps: {
+    type: Number,
+    required: false,
+    unique: false
+  },
+  time: {
+    type: Number,
+    required: false,
+    unique: false
+  },
+  weight: {
+    type: Number,
+    required: false,
+    unique: false
   },
   restTime:{
     type: Number,

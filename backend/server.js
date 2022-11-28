@@ -11,6 +11,8 @@ const port = process.env.PORT || 5555;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded());
+
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri,{
   useNewUrlParser: true, useUnifiedTopology: true
@@ -22,11 +24,11 @@ console.log("MongoDB database connection established successfully w/ ", uri);
 
 const exerciseRouter = require('./routes/exercises');
 const workoutRouter = require('./routes/workouts');
-// const userRouter = require('./routes/users');
+const userRouter = require('./routes/users');
 
 app.use('/exercises', exerciseRouter);
 app.use('/workouts', workoutRouter);
-// app.use('/users', userRouter);
+app.use('/users', userRouter);
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());

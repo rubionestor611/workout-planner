@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-let Workout = require('./workout.model');
+let {Workout, workoutSchema} = require('./workout.model');
+
 
 var userSchema = new Schema({
     name:  {
@@ -22,26 +23,21 @@ var userSchema = new Schema({
     password: {
         type: String,
         required: [true, "Please enter a password"],
-        minlength: [8, "Password must be atlease 8 characters long"]
+        minlength: [8, "Password must be atleast 8 characters long"]
     },
-    friends: {
-        type: [userSchema],
-        required: false,
-    },
-    scheduledWorkouts: {
-        type: [Workout],
-        required: true
-    },
-    completedWorkouts: {
-        type: [Workout],
-        required: true
-    },
-    customWorkouts: {
-        type: [Workout],
-        required: false
-    }
-})
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    scheduledWorkouts: [workoutSchema],
+    completedWorkouts: [workoutSchema],
+    customWorkouts: [workoutSchema]
+},
+{
+    timestamps: true,
+});
 
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
+

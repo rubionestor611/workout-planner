@@ -1,6 +1,6 @@
 const router = require('express').Router();
+let {Workout, workoutSchema} = require('../models/workout.model');
 const fs = require('fs');
-let Workout = require('../models/workout.model');
 var multer = require('multer');
 const upload = require('../middleware/uploadMiddleware');
 const {promisify} = require('util');

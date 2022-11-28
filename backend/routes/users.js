@@ -39,6 +39,12 @@ router.route('/register').post(async (req,res) =>
 });
 
 //-----GET-----//
+router.route('/').get(async (req, res) => {
+    User.find()
+    .then(users => res.json(users))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/login').get(async (req, res) => {
 
     const { email, password } = req.body;
@@ -64,6 +70,12 @@ router.route('/login').get(async (req, res) => {
     {
         return res.status(400).send({Error: "Invalid Credentials!"})
     }
+});
+
+router.route('/:id').get(async (req, res) => {
+    User.findById(req.params.id)
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err))
 });
 
 //-----DELETE-----//

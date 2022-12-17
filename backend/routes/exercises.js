@@ -40,7 +40,10 @@ router.route('/add').post(upload.single('image'),async (req,res) => {
   }
 
   const exerciseType = req.body.exerciseType;
-  const exerciseInfo = req.body.exerciseInfo;
+  const sets = req.body.sets;
+  const reps = req.body.reps;
+  const time = req.body.time;
+  const weight = req.body.weight;
   const restTime = req.body.restTime;
   const tags = req.body.tags;
   const muscleGroups = req.body.muscleGroups;
@@ -50,7 +53,10 @@ router.route('/add').post(upload.single('image'),async (req,res) => {
     description,
     img: final_img,
     exerciseType,
-    exerciseInfo,
+    sets,
+    reps,
+    time,
+    weight,
     restTime,
     tags,
     muscleGroups

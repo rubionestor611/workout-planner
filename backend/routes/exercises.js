@@ -40,7 +40,10 @@ router.route('/add').post(upload.single('image'),async (req,res) => {
   }
 
   const exerciseType = req.body.exerciseType;
-  const exerciseInfo = req.body.exerciseInfo;
+  const sets = req.body.sets;
+  const reps = req.body.reps;
+  const time = req.body.time;
+  const weight = req.body.weight;
   const restTime = req.body.restTime;
   const tags = req.body.tags;
   const muscleGroups = req.body.muscleGroups;
@@ -50,7 +53,10 @@ router.route('/add').post(upload.single('image'),async (req,res) => {
     description,
     img: final_img,
     exerciseType,
-    exerciseInfo,
+    sets,
+    reps,
+    time,
+    weight,
     restTime,
     tags,
     muscleGroups
@@ -66,21 +72,32 @@ router.route('/add').post(upload.single('image'),async (req,res) => {
 });
 
 //------UPDATE-----//
-router.route('/:id').patch((req,res) => {
-  Exercise.findById(req.params.id)
-    .then(exercise => {
-      exercise.title = req.body.title;
-      exercise.description = req.body.description;
-      exercise.img = req.body.img;
-      exercise.exerciseType = req.body.exerciseType;
-      exercise.exerciseInfo = req.body.exerciseInfo;
-      exercise.restTime = req.body.restTime;
+router.route('/:id').patch(async (req,res) => {
+  const id = req.params.id;
+  const {title,description,img,exerciseType,sets,reps,time,weight,restTime, tags, muscleGroups} = req.body;
+  
+  const exercise = await Exercise.findById(id);
+  if (!exercise)
+  {
+      return res.status(400).send({Error: `Exercise ${id} does not exist!`});
+  }
 
-      exercise.save()
-        .then(() => res.json(`Exercise ${exercise.title} updated`))
-        .catch(err => res.status(400).json('Error: ' + err));
-    })
-      .catch(err => res.status(400).json('Error: ' + err));
+  if(title) {exercise.title = title;}
+  if(description) {exercise.description = description;}
+  if(img) {exercise.img = img;}
+  if(exerciseType) {exercise.exerciseType = exerciseType;}
+  if(sets) {exercise.sets = sets;}
+  if(reps) {exercise.reps = reps;}
+  if(time) {exercise.time = time;}
+  if(weight) {exercise.weight = weight;}
+  if(restTime) {exercise.restTime = restTime;}
+  if(tags) {exercise.tags = tags;}
+  if(muscleGroups) {exercise.muscleGroups = muscleGroups;}
+
+  await exercise.save((err, newExercise)=>{
+    if (err) return res.status(400).send(err);
+    res.status(200).json(newExercise);
+  });
 });
 
 //------DELETE-----//

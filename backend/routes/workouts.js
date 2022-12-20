@@ -75,23 +75,29 @@ router.route('/add').post(upload.single('image'),async (req,res) => {
 });
 
 //------UPDATE-----//
-router.route('/:id').patch((req,res) => {
-  Workout.findById(req.params.id)
-    .then(workout => {
-      workout.title = req.body.title;
-      workout.description = req.body.description;
-      workout.img = req.body.img;
-      workout.exercises = req.body.exercises;
-      workout.location = req.body.location;
-      workout.recurrence = req.body.recurrence;
-      workout.scheduledDate = req.body.scheduledDate;
-      workout.dateOfCompletion = req.body.dateOfCompletion;
+router.route('/:id').patch(async (req,res) => {
+  const id = req.params.id;
+  const {title,description,img,exercises,location,recurrence,scheduledDate,dateOfCompletion} = req.body;
 
-      workout.save()
-        .then(() => res.json(`Workout ${workout.title} updated`))
-        .catch(err => res.status(400).json('Error: ' + err));
-    })
-      .catch(err => res.status(400).json('Error: ' + err));
+  const workout = await Workout.findById(id);
+  if(!workout)
+  {
+    return res.status(400).send({Error: `Workout ${id} does not exist!`});
+  }
+
+  if(title) {workout.title = title;}
+  if(description) {workout.description = description;}
+  if(img) {workout.img = img;}
+  if(exercises) {workout.exercises = exercises;}
+  if(location) {workout.location = location;}
+  if(recurrence) {workout.recurrence = recurrence;}
+  if(scheduledDate) {workout.scheduledDate = scheduledDate;}
+  if(dateOfCompletion) {workout.dateOfCompletion = dateOfCompletion;}
+
+  await workout.save((err,newWorkout) => {
+    if (err) return res.status(400).send(err);
+    res.status(200).json(newWorkout);
+  });
 });
 
 //------DELETE-----//

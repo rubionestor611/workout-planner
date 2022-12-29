@@ -5,22 +5,23 @@ import React from 'react';
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      
-      <Text style = {styles.textStyle}> 
-          Welcome!
-      </Text>
-      
-      <Image source={require('./assets/favicon.png')} />
 
-      <Button 
+      <Image style={styles.image}
+        source={require('./assets/workout.png')} />
+
+      <Text style = {styles.heading}> Welcome! </Text>
+      <Text style = {styles.text}>You will have everything you need to reach your personal fitness goals - for free! </Text>
+      
+      <Button
         title="Login"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"/>
+        color="#10B9F1"
+        onPress={() => Alert.alert('Simple Button pressed')}
+      />
 
       <Button 
-        title="Register"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"/>
+        title="Create an account"
+        color="#C4C4C4"
+        accessibilityLabel="Create an account"/>
 
     </SafeAreaView>   
   );
@@ -33,8 +34,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  textStyle:{
-    fontSize: 30,
-    fontWeight: 'bold',
+  text:{
+    fontFamily: 'Inter',
+    fontWeight: 400,
+    fontSize: 16,
+    fontWeight: 'normal',
+    color: '#C4C4C4',
+    margin: 16,
+    textAlign: 'center',
+  },
+  heading:{
+    color: '#2B2B2B',
+    fontFamily: 'HelveticaNeue-Bold',
+    fontSize: 36,
+    position: 'absolute',
+    textAlign: 'center',
+  },
+  image: {
+    position: 'absolute',
+    top: 0
+  },
+  login: {
+    backgroundColor: '#10B9F1',
   }
 });

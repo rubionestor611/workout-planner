@@ -4,10 +4,14 @@ import {
   Text, 
   Image, 
   View, 
-  TextInput
+  TextInput,
+  Alert,
+  KeyboardAvoidingView,
+  ScrollView
 } from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+//import { KeyboardAvoidingView } from 'react-native-web';
 
 export default function App() {
   
@@ -19,44 +23,54 @@ export default function App() {
     console.log(enteredPassword);
   }
 
+  /*
+
+  */
   return (
     <NavigationContainer>
       {
-      <View style={styles.container}>
+        <ScrollView
+        bounces={false}
+        contentContainerStyle={styles.container}>
+          <KeyboardAvoidingView
+          behavior = {"position"/*Platform.OS === "ios" ? "padding" : "height"*/}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 5}
+          >
+            <Image style={styles.image}
+            source={require('./assets/workout.png')} />
 
-        <Image style={styles.image}
-        source={require('./assets/workout.png')} />
-        
-        <View style={styles.textcontainer}>
-        <Text style = {styles.heading}> Welcome! </Text>
-        <Text style = {styles.text}> You will have everything you need to reach your personal fitness goals - for free! </Text>
-        </View>
-        
-        <View style={styles.buttoncontainer}>
+            <View style={styles.textcontainer}>
+              <Text style = {styles.heading}> Welcome! </Text>
+              <Text style = {styles.text}> You will have everything you need to reach your personal fitness goals - for free! </Text>
+            </View>
 
-        <TextInput style={styles.inputstyle} 
-          placeholder="Username"
-          returnKeyType="next"
-          keyboardType="email-address"
-          onChangeText={usernameInputHandler}/>
+            <View style={styles.buttoncontainer}>
+              <TextInput style={styles.inputstyle} 
+              placeholder="Username"
+              returnKeyType="next"
+              onSubmitEditing={() => {this.password.focus();}}
+              keyboardType="email-address"
+              onChangeText={usernameInputHandler}/>
 
-        <TextInput style={styles.inputstyle} 
-          placeholder="Password"
-          returnKeyType="go"
-          secureTextEntry
-          onChangeText={passwordInputHandler}/>
+              <TextInput style={styles.inputstyle} 
+              placeholder="Password"
+              returnKeyType="go"
+              ref={(input) => {this.password = input}}
+              secureTextEntry
+              onChangeText={passwordInputHandler}/>
+              
+              <Button
+              title="Login"
+              color="#10B9F1"
+              onPress={() => Alert.alert('Simple Button pressed')}/>
 
-        <Button
-        title="Login"
-        color="#10B9F1"
-        onPress={() => Alert.alert('Simple Button pressed')}/>
-
-        <Button 
-        title="Create an account"
-        color="#C4C4C4"
-        accessibilityLabel="Create an account"/>
-        </View>
-      </View>   
+              <Button 
+              title="Create an account"
+              color="#C4C4C4"
+              accessibilityLabel="Create an account"/>
+            </View>
+          </KeyboardAvoidingView>
+        </ScrollView>  
       }
       </NavigationContainer>
   );
@@ -74,9 +88,13 @@ const styles = StyleSheet.create({
     flex: .8,
     alignItems: 'center',
     justifyContent: 'center',
+    width: '90%'
   },
   buttoncontainer:{
     flex: 1,
+    alignItems: 'center',
+    paddingTop: 10,
+    width: '100%'
   },
   heading:{
     color: '#2B2B2B',
@@ -104,8 +122,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderWidth: 1,
     borderColor: '#C4C4C4',
-    width: '80%',
-    padding:7,
+    width: '70%',
+    padding:8,
+    marginVertical:2
   },
 });
 

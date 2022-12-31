@@ -52,7 +52,7 @@ export default function App() {
               <TextInput style={styles.inputstyle} 
               placeholder="Password"
               returnKeyType="go"
-              ref={(input) => {this.password = input}}
+              ref={(input) => {}}
               secureTextEntry
               onChangeText={passwordInputHandler}/>
               

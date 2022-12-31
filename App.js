@@ -22,10 +22,7 @@ export default function App() {
   function passwordInputHandler(enteredPassword){
     console.log(enteredPassword);
   }
-
-  /*
-
-  */
+  
   return (
     <NavigationContainer>
       {

@@ -9,8 +9,8 @@ import {
   KeyboardAvoidingView,
   ScrollView
 } from 'react-native';
-import React, { useRef } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
 //import { KeyboardAvoidingView } from 'react-native-web';
 
 //export default function App() {
@@ -140,6 +140,20 @@ const styles = StyleSheet.create({
     width: '70%',
     padding:8,
     marginVertical:2
+  },
+  CreateWorkoutBttns:{
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 10,
+    width: '100%'
+  },
+  CreateWorkoutText:{
+    fontFamily: 'HelveticaNeue',
+    fontWeight: 400,
+    fontSize: 12,
+    fontWeight: 'normal',
+    color: '#C4C4C4',
+    textAlign: 'center',
   },
 });
 

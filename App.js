@@ -9,68 +9,86 @@ import {
   KeyboardAvoidingView,
   ScrollView
 } from 'react-native';
-import React from 'react';
+import React, { useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 //import { KeyboardAvoidingView } from 'react-native-web';
 
-export default function App() {
-  
-  function usernameInputHandler(enteredUsername){
-    console.log(enteredUsername);
+//export default function App() {
+class App extends React.Component {
+  //constructor (state and such)
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: ''
+    }
+    this.passwordRef = React.createRef();
+    // bind all functions to class
+    this.usernameInputHandler = this.usernameInputHandler.bind(this);
+    this.passwordInputHandler = this.passwordInputHandler.bind(this);
   }
 
-  function passwordInputHandler(enteredPassword){
-    console.log(enteredPassword);
+  // functions
+  usernameInputHandler(enteredUsername){
+    this.setState({username: enteredUsername});
   }
-  
-  return (
-    <NavigationContainer>
-      {
-        <ScrollView
-        bounces={false}
-        contentContainerStyle={styles.container}>
-          <KeyboardAvoidingView
-          behavior = {"position"/*Platform.OS === "ios" ? "padding" : "height"*/}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 5}
-          >
-            <Image style={styles.image}
-            source={require('./assets/workout.png')} />
 
-            <View style={styles.textcontainer}>
-              <Text style = {styles.heading}> Welcome! </Text>
-              <Text style = {styles.text}> You will have everything you need to reach your personal fitness goals - for free! </Text>
-            </View>
+  passwordInputHandler(enteredPassword){
+    this.setState({password: enteredPassword});
+  }
 
-            <View style={styles.buttoncontainer}>
-              <TextInput style={styles.inputstyle} 
-              placeholder="Username"
-              returnKeyType="next"
-              onSubmitEditing={() => {this.password.focus();}}
-              keyboardType="email-address"
-              onChangeText={usernameInputHandler}/>
+  render() {
+    return (
+      <NavigationContainer>
+        {
+          <ScrollView
+          bounces={false}
+          contentContainerStyle={styles.container}>
+            <KeyboardAvoidingView
+            behavior = {"position"/*Platform.OS === "ios" ? "padding" : "height"*/}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 5}
+            >
+              <Image style={styles.image}
+              source={require('./assets/workout.png')} />
 
-              <TextInput style={styles.inputstyle} 
-              placeholder="Password"
-              returnKeyType="go"
-              ref={(input) => {}}
-              secureTextEntry
-              onChangeText={passwordInputHandler}/>
-              
-              <Button
-              title="Login"
-              color="#10B9F1"
-              onPress={() => Alert.alert('Simple Button pressed')}/>
+              <View style={styles.textcontainer}>
+                <Text style = {styles.heading}> Welcome! </Text>
+                <Text style = {styles.text}> You will have everything you need to reach your personal fitness goals - for free! </Text>
+              </View>
 
-              <Button 
-              title="Create an account"
-              color="#C4C4C4"
-              accessibilityLabel="Create an account"/>
-            </View>
-          </KeyboardAvoidingView>
-        </ScrollView>  
-      }
-      </NavigationContainer>
-  );
+              <View style={styles.buttoncontainer}>
+                <TextInput style={styles.inputstyle} 
+                placeholder="Username"
+                returnKeyType="next"
+                onSubmitEditing={() => {this.passwordRef.current.focus();}}
+                blurOnSubmit={false}
+                keyboardType="email-address"
+                onChangeText={(text) => this.usernameInputHandler(text)}/>
+
+                <TextInput style={styles.inputstyle} 
+                placeholder="Password"
+                returnKeyType="go"
+                ref={this.passwordRef}
+                secureTextEntry
+                onChangeText={(text) => {this.passwordInputHandler(text)}}/>
+
+                <Button
+                title="Login"
+                color="#10B9F1"
+                // expecting line below to turn into authentication or page switching soon enough //
+                onPress={() => Alert.alert(`Simple Button pressed with ${this.state.username} and ${this.state.password}`)}/>
+
+                <Button 
+                title="Create an account"
+                color="#C4C4C4"
+                accessibilityLabel="Create an account"/>
+              </View>
+            </KeyboardAvoidingView>
+          </ScrollView>  
+        }
+        </NavigationContainer>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -125,3 +143,4 @@ const styles = StyleSheet.create({
   },
 });
 
+export default App;

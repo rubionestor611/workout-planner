@@ -6,9 +6,16 @@ let {Workout, workoutSchema} = require('./workout.model');
 
 
 var userSchema = new Schema({
-    name:  {
+    firstName:  {
         type: String,
-        required: [true, "Please enter your name"],
+        required: [true, "Please enter your first name"],
+        unique: false,
+        trim: true,
+        minlength: 2
+    },
+    lastName:  {
+        type: String,
+        required: [true, "Please enter your last name"],
         unique: false,
         trim: true,
         minlength: 2

@@ -7,9 +7,9 @@ let User = require('../models/user.model');
 //-----POST-----//
 router.route('/register').post(async (req,res) =>
 {
-    const { name, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
-    if (!name || !email || !password)
+    if (!firstName || !lastName || !email || !password)
     {
         return res.status(400).send({Error: "Please enter all fields!"});
     }
@@ -27,7 +27,8 @@ router.route('/register').post(async (req,res) =>
     const hashedPassword = await bcrypt.hash(password, salt);
     
     const user = new User ({
-        name,
+        firstName,
+        lastName,
         email,
         password: hashedPassword,
     });
@@ -38,20 +39,12 @@ router.route('/register').post(async (req,res) =>
     })
 });
 
-//-----GET-----//
-router.route('/').get(async (req, res) => {
-    User.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/login').get(async (req, res) => {
+router.route('/login').post(async (req, res) => {
 
     const { email, password } = req.body;
-
     if (!email || !password)
     {
-        return res.status(400).send({Error: "Please enter all fields!"});
+        return res.status(500).send({Error: "Please enter all fields!"});
     }
 
     // Check if user exists
@@ -59,7 +52,7 @@ router.route('/login').get(async (req, res) => {
 
     if (!user)
     {
-        return res.status(400).send({Error: "Email does not exist!"});
+        return res.status(501).send({Error: "Email does not exist!"});
     }
 
     if (await bcrypt.compare(password, user.password))
@@ -68,8 +61,15 @@ router.route('/login').get(async (req, res) => {
     }
     else 
     {
-        return res.status(400).send({Error: "Invalid Credentials!"})
+        return res.status(502).send({Error: "Invalid Credentials!"})
     }
+});
+
+//-----GET-----//
+router.route('/').get(async (req, res) => {
+    User.find()
+    .then(users => res.json(users))
+    .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/:id').get(async (req, res) => {

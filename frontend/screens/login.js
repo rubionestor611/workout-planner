@@ -11,6 +11,9 @@ import {
   } from 'react-native';
 import React from 'react';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
+import axios from 'axios';
+import { API_URL, PORT } from "@env";
+const baserUrl = API_URL + PORT + '/';
 
 //export default function App() {
 class Login extends React.Component {
@@ -18,24 +21,41 @@ class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
+            email: '',
             password: ''
         }
         this.passwordRef = React.createRef();
         // bind all functions to class
-        this.usernameInputHandler = this.usernameInputHandler.bind(this);
+        this.emailInputHandler = this.emailInputHandler.bind(this);
         this.passwordInputHandler = this.passwordInputHandler.bind(this);
+        this.loginHandler = this.loginHandler.bind(this);
     }
       
     // functions
-    usernameInputHandler(enteredUsername){
-    this.setState({username: enteredUsername});
+    emailInputHandler(enteredEmail){
+        this.setState({email: enteredEmail});
     }
       
     passwordInputHandler(enteredPassword){
         this.setState({password: enteredPassword});
     }
-      
+
+    loginHandler(){
+        axios.post(baserUrl + "users/login", {
+            email: this.state["email"],
+            password: this.state["password"]
+        })
+        .then((response) => {
+            if (response.status == 200)
+            {
+                // Go to landing Page here
+                console.log("Logged in")
+            }
+        }, (error) => {
+            console.log(error);
+        });
+    }
+
     render() {
         return (
         <NavigationContainer>
@@ -55,12 +75,12 @@ class Login extends React.Component {
       
                     <View style={styles.buttoncontainer}>
                         <TextInput style={styles.inputstyle} 
-                            placeholder="Username"
+                            placeholder="Email"
                             returnKeyType="next"
                             onSubmitEditing={() => {this.passwordRef.current.focus();}}
                             blurOnSubmit={false}
                             keyboardType="email-address"
-                            onChangeText={(text) => this.usernameInputHandler(text)}/>
+                            onChangeText={(text) => this.emailInputHandler(text)}/>
       
                         <TextInput style={styles.inputstyle} 
                             placeholder="Password"
@@ -72,8 +92,8 @@ class Login extends React.Component {
                         <Button
                             title="Login"
                             color="#10B9F1"
-                        // expecting line below to turn into authentication or page switching soon enough //
-                        onPress={() => Alert.alert(`Simple Button pressed with ${this.state.username} and ${this.state.password}`)}/>
+                            // expecting line below to turn into authentication or page switching soon enough //
+                            onPress={() => this.loginHandler()}/>
       
                         <Button 
                             title="Create an account"

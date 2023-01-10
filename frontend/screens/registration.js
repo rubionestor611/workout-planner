@@ -9,7 +9,7 @@ const Register = () => {
             placeholder="Username"
             returnKeyType="next"
             keyboardType="email-address"
-             onChangeText={usernameInputHandler}/>
+            onChangeText={usernameInputHandler}/>
 
             <TextInput style={styles.inputstyle} 
             placeholder="Password"

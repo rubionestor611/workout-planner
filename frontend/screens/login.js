@@ -48,6 +48,7 @@ class Login extends React.Component {
         .then((response) => {
             if (response.status == 200)
             {
+                // Go to landing Page here
                 console.log("Logged in")
             }
         }, (error) => {

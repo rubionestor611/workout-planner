@@ -10,7 +10,7 @@ import {
     ScrollView
   } from 'react-native';
 import React from 'react';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import axios from 'axios';
 import { API_URL, PORT } from "@env";
 const baserUrl = API_URL + PORT + '/';
@@ -50,6 +50,7 @@ class Login extends React.Component {
             {
                 // Go to landing Page here
                 console.log("Logged in")
+                this.props.navigation.navigate("landingPage");
             }
         }, (error) => {
             console.log(error);
@@ -58,21 +59,20 @@ class Login extends React.Component {
 
     render() {
         return (
-        <NavigationContainer>
-        {
             <ScrollView
                 bounces={false}
-                contentContainerStyle={styles.container}>
+                contentContainerStyle={styles.container}
+                >
                 <KeyboardAvoidingView
                     behavior = {"position"/*Platform.OS === "ios" ? "padding" : "height"*/}
                     keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 5}>
-                <Image style={styles.image}
-                    source={require('../../assets/workout.png')} />
+                    <Image style={styles.image}
+                        source={require('../../assets/workout.png')} />
                     <View style={styles.textcontainer}>
                         <Text style = {styles.heading}> Welcome! </Text>
                         <Text style = {styles.text}> You will have everything you need to reach your personal fitness goals - for free! </Text>
                     </View>
-      
+    
                     <View style={styles.buttoncontainer}>
                         <TextInput style={styles.inputstyle} 
                             placeholder="Email"
@@ -81,29 +81,27 @@ class Login extends React.Component {
                             blurOnSubmit={false}
                             keyboardType="email-address"
                             onChangeText={(text) => this.emailInputHandler(text)}/>
-      
+    
                         <TextInput style={styles.inputstyle} 
                             placeholder="Password"
                             returnKeyType="go"
                             ref={this.passwordRef}
                             secureTextEntry
                             onChangeText={(text) => {this.passwordInputHandler(text)}}/>
-      
+    
                         <Button
                             title="Login"
                             color="#10B9F1"
                             // expecting line below to turn into authentication or page switching soon enough //
                             onPress={() => this.loginHandler()}/>
-      
+    
                         <Button 
                             title="Create an account"
                             color="#C4C4C4"
                             accessibilityLabel="Create an account"/>
                     </View>
-                  </KeyboardAvoidingView>
-                </ScrollView>  
-              }
-            </NavigationContainer>
+                </KeyboardAvoidingView>
+            </ScrollView> 
         )
     }
 }
@@ -111,16 +109,17 @@ class Login extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        flex: .9,
+        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
     textcontainer: {
         flex: .8,
+        alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '90%'
+        width: '90%',
     },
     buttoncontainer:{
         flex: 1,
@@ -157,20 +156,6 @@ const styles = StyleSheet.create({
         width: '70%',
         padding:8,
         marginVertical:2
-    },
-    CreateWorkoutBttns:{
-        flex: 1,
-        alignItems: 'center',
-        paddingTop: 10,
-        width: '100%'
-    },
-    CreateWorkoutText:{
-        fontFamily: 'HelveticaNeue',
-        fontWeight: 400,
-        fontSize: 12,
-        fontWeight: 'normal',
-        color: '#C4C4C4',
-        textAlign: 'center',
     },
 });
       

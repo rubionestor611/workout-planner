@@ -1,7 +1,7 @@
 import { StyleSheet, Button, TouchableOpacity, Text, Image, View, SafeAreaView, TextInput } from 'react-native';
 import React from 'react';
 
-const landingPage = () => {
+const LandingPage = () => {
     return  (
         <View style={{flex : 1}}>
             <Text>Hello Adam Smith</Text>
@@ -17,4 +17,21 @@ const landingPage = () => {
     )
 }
 
-export default landingPage; 
+const styles = StyleSheet.create({
+    CreateWorkoutBttns:{
+        flex: 1,
+        alignItems: 'center',
+        paddingTop: 10,
+        width: '100%'
+    },
+    CreateWorkoutText:{
+        fontFamily: 'HelveticaNeue',
+        fontWeight: 400,
+        fontSize: 12,
+        fontWeight: 'normal',
+        color: '#C4C4C4',
+        textAlign: 'center',
+    },
+});
+
+export default LandingPage; 
